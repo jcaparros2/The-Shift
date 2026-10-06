@@ -1,0 +1,50 @@
+# Doble Turno — instrucciones para Claude Code
+
+## El proyecto
+
+Juego en Unity 6 (C#): simulador de vida en una ciudad pequeña. De día el jugador es repartidor (QuickDrop) y de noche taxista (CityCab). La misma gente aparece en los dos turnos.
+
+El diseño completo está en `Docs/GDD.md`. Léelo antes de proponer o crear sistemas nuevos, y sigue sus decisiones (arquitectura, nombres de sistemas, fases).
+
+## Sobre mí
+
+- Estoy aprendiendo Unity y C#. Este es mi primer proyecto grande.
+- Háblame siempre en español.
+- Cuando crees o cambies un script, explícame brevemente qué hace cada parte y por qué lo haces así.
+- Si hay varias formas razonables de hacer algo, dímelo y recomiéndame una antes de empezar.
+
+## Cómo trabajamos
+
+- **Una tarea pequeña cada vez**, siguiendo las fases y tareas del GDD. No empieces la siguiente fase sin que yo lo diga.
+- Al terminar una tarea, dime cómo probarla en el editor (qué pulsar, qué debería pasar) y para ahí.
+- No hagas cambios grandes que no he pedido. Si ves algo que mejorar fuera de la tarea, coméntamelo en lugar de hacerlo.
+- Después de cambiar código, revisa la consola de Unity y corrige los errores de compilación antes de darme la tarea por terminada.
+- No instales paquetes nuevos sin preguntarme primero.
+
+## Decisiones técnicas
+
+- Unity 6, Input System (no el Input Manager antiguo), Cinemachine para cámaras.
+- Cámara: primera persona por defecto, pero el código debe permitir añadir más adelante una vista en tercera persona sin rehacer el jugador.
+- Estilo arcade en la conducción, no simulación.
+- Sistemas pequeños e independientes que se comunican por eventos de C#.
+- Datos del juego (paquetes, vehículos, NPCs, tienda) en ScriptableObjects, para ajustar valores sin tocar código.
+- Estilo de código: nombres en inglés (clases, métodos, variables), comentarios en español. Un script por clase, organizados en `Assets/Scripts/<Sistema>/`.
+
+## Estructura de carpetas
+
+```
+Assets/
+  Scripts/      # Código, una subcarpeta por sistema (Player, Time, Jobs, Economy...)
+  Data/         # ScriptableObjects con los datos del juego
+  Prefabs/
+  Scenes/
+  Art/          # Modelos, materiales, texturas
+  Audio/
+Docs/
+  GDD.md        # Documento de diseño
+```
+
+## Estado actual
+
+- Fase actual: **0 · Aprender y prototipar**.
+- Siguiente tarea: jugador en primera persona que camina, mira con el ratón e interactúa con objetos.
