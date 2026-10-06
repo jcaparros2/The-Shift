@@ -46,5 +46,6 @@ Docs/
 
 ## Estado actual
 
-- Fase actual: **0 · Aprender y prototipar**.
-- Siguiente tarea: jugador en primera persona que camina, mira con el ratón e interactúa con objetos.
+- Fase actual: **1 · MVP: Reparto**.
+- Fase 0 terminada: jugador en primera persona (caminar, mirar, interactuar con `IInteractable`) en `SampleScene`, y prototipo de conducción arcade (`VehicleController` + `VehicleData`, cámara con Cinemachine) en `DrivingPrototype`.
+- Siguiente tarea: reloj del juego con ciclo día/noche e iluminación.
