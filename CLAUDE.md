@@ -47,4 +47,8 @@ Docs/
 ## Estado actual
 
 - Fase actual: **0 · Aprender y prototipar**.
-- Siguiente tarea: jugador en primera persona que camina, mira con el ratón e interactúa con objetos.
+- Hecho: jugador en primera persona que camina y mira con el ratón (`Assets/Scripts/Player/PlayerController.cs`, montado en `SampleScene` con suelo y cubos de prueba).
+  - Usa `CharacterController` y las acciones `Player/Move` y `Player/Look` del asset de acciones del proyecto (`InputSystem_Actions`).
+  - La cámara cuelga de `CameraTarget` (hijo de `Player`, a la altura de los ojos), que es el que gira en vertical. Cinemachine aún no está instalado; cuando se añada, la cámara seguirá a ese mismo `CameraTarget`.
+  - Mirar está ajustado solo para ratón; con mando iría muy lento.
+- Siguiente tarea: interactuar con objetos (interfaz `IInteractable` + raycast desde la cámara, según el GDD).
