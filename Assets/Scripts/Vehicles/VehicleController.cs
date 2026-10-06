@@ -57,10 +57,10 @@ public class VehicleController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMass;
 
-        // Por ahora reutilizamos el mapa "Player": W/S acelerar/frenar, A/D girar, Espacio freno de mano.
-        // Cuando el jugador pueda subir y bajar del coche haremos un mapa "Vehicle" propio.
-        moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
-        handbrakeAction = InputSystem.actions.FindAction("Player/Jump", throwIfNotFound: true);
+        // Mapa "Vehicle": W/S acelerar/frenar, A/D girar, Espacio freno de mano.
+        // PlayerVehicleHandler lo activa al subir y lo apaga al bajar.
+        moveAction = InputSystem.actions.FindAction("Vehicle/Drive", throwIfNotFound: true);
+        handbrakeAction = InputSystem.actions.FindAction("Vehicle/Handbrake", throwIfNotFound: true);
     }
 
     // La física se hace en FixedUpdate, que va a ritmo fijo y sincronizado con el motor de física

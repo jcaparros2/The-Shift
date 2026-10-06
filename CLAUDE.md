@@ -49,4 +49,5 @@ Docs/
 - Fase actual: **1 · MVP: Reparto**.
 - Fase 0 terminada: jugador en primera persona (caminar, mirar, interactuar con `IInteractable`) en `SampleScene`, y prototipo de conducción arcade (`VehicleController` + `VehicleData`, cámara con Cinemachine) en `DrivingPrototype`.
 - Hecho en fase 1: reloj del juego (`TimeManager` + `TimeSettings`, eventos `OnHourChanged`/`OnDayChanged`), ciclo día/noche (`DayNightLighting`) y hora en pantalla (`ClockDisplay`) en `SampleScene`.
-- Siguiente tarea: bicicleta conducible.
+- Hecho en fase 1: bicicleta conducible (prefab `Bike`, mismo `VehicleController` que el coche). Se sube y se baja con E (`VehicleEntry` + `PlayerVehicleHandler`, mapa de controles "Vehicle"). Cámaras con Cinemachine: primera persona a pie y cámara propia de cada vehículo al conducir (`PlayerCameraSwitcher`). El jugador salta con Espacio.
+- Siguiente tarea: almacén QuickDrop: recoger paquetes.

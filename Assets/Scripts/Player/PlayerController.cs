@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Controla al jugador a pie: caminar con WASD/stick y mirar con el ratón.
+// Controla al jugador a pie: caminar con WASD/stick, mirar con el ratón y saltar con Espacio.
 // El cuerpo gira en horizontal (yaw) y solo el "cameraTarget" gira en vertical (pitch),
 // así más adelante una cámara de Cinemachine (primera o tercera persona) puede seguir
 // a ese mismo punto sin rehacer el jugador.
@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip("Gravedad aplicada al jugador (negativa = hacia abajo).")]
     [SerializeField] private float gravity = -20f;
+
+    [Tooltip("Altura del salto, en metros.")]
+    [SerializeField] private float jumpHeight = 1.1f;
 
     [Header("Cámara")]
     [Tooltip("Punto a la altura de los ojos que gira arriba/abajo. La cámara cuelga de aquí.")]
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private InputAction moveAction;
     private InputAction lookAction;
+    private InputAction jumpAction;
 
     // Ángulo vertical actual de la vista
     private float pitch;
@@ -43,6 +47,7 @@ public class PlayerController : MonoBehaviour
         // Acciones del asset de acciones del proyecto (InputSystem_Actions, mapa "Player")
         moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
         lookAction = InputSystem.actions.FindAction("Player/Look", throwIfNotFound: true);
+        jumpAction = InputSystem.actions.FindAction("Player/Jump", throwIfNotFound: true);
     }
 
     private void OnEnable()
@@ -77,6 +82,13 @@ public class PlayerController : MonoBehaviour
         cameraTarget.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 
+    // Vuelve a mirar al frente (por ejemplo, al subir a un vehículo)
+    public void ResetLook()
+    {
+        pitch = 0f;
+        cameraTarget.localRotation = Quaternion.identity;
+    }
+
     private void Move()
     {
         Vector2 input = moveAction.ReadValue<Vector2>();
@@ -89,6 +101,13 @@ public class PlayerController : MonoBehaviour
         {
             verticalVelocity = -2f;
         }
+
+        // Saltar solo desde el suelo. La velocidad inicial sale de la física: v = √(2·g·altura)
+        if (controller.isGrounded && jumpAction.WasPressedThisFrame())
+        {
+            verticalVelocity = Mathf.Sqrt(2f * -gravity * jumpHeight);
+        }
+
         verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 velocity = direction * walkSpeed + Vector3.up * verticalVelocity;

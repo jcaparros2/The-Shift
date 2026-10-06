@@ -262,7 +262,7 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 
 - [x] Jugador en primera persona que camina e interactúa
 - [x] Reloj del juego con ciclo día/noche e iluminación
-- [ ] Bicicleta conducible
+- [x] Bicicleta conducible
 - [ ] Almacén QuickDrop: recoger paquetes
 - [ ] Generar pedidos con destino, pago y hora límite
 - [ ] Entregar y cobrar
