@@ -23,9 +23,21 @@ public class VehicleController : MonoBehaviour
     [Tooltip("Segundos boca abajo antes de volver a ponerlo derecho automáticamente.")]
     [SerializeField] private float flipResetTime = 2f;
 
+    [Tooltip("Si alguien lo conduce. Sin conductor ignora los controles y queda frenado (aparcado).")]
+    [SerializeField] private bool isDriven = true;
+
     // Velocidad actual en km/h (positiva hacia delante). Útil para un velocímetro más adelante.
     public float CurrentSpeedKmh { get; private set; }
     public bool IsGrounded { get; private set; }
+
+    // Giro pedido por el conductor (-1 izquierda, 1 derecha). Lo usan los efectos visuales, como inclinar la bici.
+    public float SteerInput { get; private set; }
+
+    public bool IsDriven
+    {
+        get => isDriven;
+        set => isDriven = value;
+    }
 
     private Rigidbody rb;
     private InputAction moveAction;
@@ -54,8 +66,10 @@ public class VehicleController : MonoBehaviour
     // La física se hace en FixedUpdate, que va a ritmo fijo y sincronizado con el motor de física
     private void FixedUpdate()
     {
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        bool handbrake = handbrakeAction.IsPressed();
+        // Sin conductor: ni acelera ni gira, y el freno de mano queda puesto
+        Vector2 input = isDriven ? moveAction.ReadValue<Vector2>() : Vector2.zero;
+        bool handbrake = !isDriven || handbrakeAction.IsPressed();
+        SteerInput = input.x;
 
         IsGrounded = Physics.Raycast(transform.position, -transform.up, groundCheckDistance,
                                      ~0, QueryTriggerInteraction.Ignore);
@@ -78,6 +92,11 @@ public class VehicleController : MonoBehaviour
                               + transform.up * upSpeed;
         }
 
+        if (data.keepUpright)
+        {
+            KeepUpright();
+        }
+
         CurrentSpeedKmh = forwardSpeed / KmhToMs;
         ResetIfFlipped();
     }
@@ -96,7 +115,8 @@ public class VehicleController : MonoBehaviour
         {
             // Si íbamos marcha atrás, primero frena; si no, acelera hasta la máxima
             float rate = forwardSpeed < 0f ? data.brakeKmh : data.accelerationKmh;
-            return Mathf.MoveTowards(forwardSpeed, data.maxSpeedKmh * throttle * KmhToMs, rate * KmhToMs * dt);
+            float maxSpeed = data.maxSpeedKmh * UphillFactor();
+            return Mathf.MoveTowards(forwardSpeed, maxSpeed * throttle * KmhToMs, rate * KmhToMs * dt);
         }
 
         if (throttle < -0.01f)
@@ -134,6 +154,28 @@ public class VehicleController : MonoBehaviour
         Vector3 angular = rb.angularVelocity;
         angular -= transform.up * Vector3.Dot(angular, transform.up);
         rb.angularVelocity = angular + transform.up * yawRate;
+    }
+
+    // 1 en llano o cuesta abajo; menos de 1 cuesta arriba, según uphillSlowdown
+    private float UphillFactor()
+    {
+        // Seno del ángulo de subida: 0 en llano, 0.26 en una cuesta de 15°
+        float slope = Mathf.Max(0f, Vector3.Dot(transform.forward, Vector3.up));
+        return Mathf.Clamp01(1f - slope * data.uphillSlowdown);
+    }
+
+    private void KeepUpright()
+    {
+        // Ángulo que le falta para estar derecho, girando solo sobre su eje "adelante" (alabeo).
+        // Así puede seguir subiendo rampas (cabeceo) sin caerse de lado.
+        Vector3 forward = transform.forward;
+        Vector3 uprightUp = Vector3.ProjectOnPlane(Vector3.up, forward).normalized;
+        float rollError = Vector3.SignedAngle(transform.up, uprightUp, forward);
+
+        // Sustituye el giro de alabeo por uno que lo endereza
+        Vector3 angular = rb.angularVelocity;
+        angular -= forward * Vector3.Dot(angular, forward);
+        rb.angularVelocity = angular + forward * (rollError * Mathf.Deg2Rad * data.uprightStrength);
     }
 
     private void ResetIfFlipped()

@@ -35,4 +35,14 @@ public class VehicleData : ScriptableObject
 
     [Tooltip("Agarre con el freno de mano puesto. Bajo para poder derrapar.")]
     public float handbrakeGrip = 1.5f;
+
+    [Header("Terreno y estabilidad")]
+    [Tooltip("Cuánta velocidad máxima pierde cuesta arriba. 0 = nada; 2 = en una cuesta de 15° va a la mitad.")]
+    [Min(0f)] public float uphillSlowdown = 0.5f;
+
+    [Tooltip("Se mantiene derecho solo, sin volcar de lado (bici, moto).")]
+    public bool keepUpright = false;
+
+    [Tooltip("Lo rápido que se endereza si keepUpright está activo.")]
+    [Min(0f)] public float uprightStrength = 10f;
 }
