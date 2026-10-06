@@ -48,4 +48,5 @@ Docs/
 
 - Fase actual: **1 · MVP: Reparto**.
 - Fase 0 terminada: jugador en primera persona (caminar, mirar, interactuar con `IInteractable`) en `SampleScene`, y prototipo de conducción arcade (`VehicleController` + `VehicleData`, cámara con Cinemachine) en `DrivingPrototype`.
-- Siguiente tarea: reloj del juego con ciclo día/noche e iluminación.
+- Hecho en fase 1: reloj del juego (`TimeManager` + `TimeSettings`, eventos `OnHourChanged`/`OnDayChanged`), ciclo día/noche (`DayNightLighting`) y hora en pantalla (`ClockDisplay`) en `SampleScene`.
+- Siguiente tarea: bicicleta conducible.

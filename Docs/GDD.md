@@ -260,8 +260,8 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 
 ### Tareas de la fase 1 (MVP)
 
-- [ ] Jugador en primera persona que camina e interactúa
-- [ ] Reloj del juego con ciclo día/noche e iluminación
+- [x] Jugador en primera persona que camina e interactúa
+- [x] Reloj del juego con ciclo día/noche e iluminación
 - [ ] Bicicleta conducible
 - [ ] Almacén QuickDrop: recoger paquetes
 - [ ] Generar pedidos con destino, pago y hora límite
