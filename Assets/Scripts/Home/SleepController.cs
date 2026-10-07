@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +28,14 @@ public class SleepController : MonoBehaviour
     [SerializeField] private float summaryDuration = 3.5f;
 
     public bool IsSleeping { get; private set; }
+
+    // Avisa cuando ya es por la mañana, con la jornada cerrada (lo usa SaveManager para guardar)
+    public event Action OnNightPassed;
+
+    // Líneas extra para el resumen que añaden quienes escuchan OnNightPassed ("Partida guardada")
+    private readonly List<string> extraSummaryLines = new List<string>();
+
+    public void AddSummaryLine(string line) => extraSummaryLines.Add(line);
 
     // ¿Es buena hora para dormir? De earliestSleepHour a medianoche, o de medianoche a latestSleepHour
     public bool CanSleepNow
@@ -68,9 +78,15 @@ public class SleepController : MonoBehaviour
 
         int finishedDay = time.Day;
         int lostJobs = playerJobs.CancelAllJobs();
-        fader.SetText(BuildSummary(finishedDay, lostJobs));
+        string summary = BuildSummary(finishedDay, lostJobs);
         dayStats.ResetDay();
         time.SetTime(wakeUpHour);
+
+        // Ya es por la mañana: quien escuche (SaveManager) hace lo suyo y puede añadir una línea al resumen
+        extraSummaryLines.Clear();
+        OnNightPassed?.Invoke();
+        foreach (string line in extraSummaryLines) summary += $"\n\n<size=80%>{line}</size>";
+        fader.SetText(summary);
 
         yield return new WaitForSecondsRealtime(summaryDuration);
 

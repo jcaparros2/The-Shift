@@ -99,6 +99,13 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    // Pone el día y la hora de una partida guardada, sin lanzar eventos (no "pasa" el tiempo)
+    public void LoadState(int day, float timeOfDay)
+    {
+        Day = day;
+        TimeOfDay = Mathf.Repeat(timeOfDay, 24f);
+    }
+
     // Salta directamente a una hora del día actual (pruebas, y más adelante dormir).
     // Si la hora es menor que la actual, se entiende que es del día siguiente.
     public void SetTime(float hour)

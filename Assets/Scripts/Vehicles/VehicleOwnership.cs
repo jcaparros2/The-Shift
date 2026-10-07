@@ -18,6 +18,15 @@ public class VehicleOwnership : MonoBehaviour
     public bool IsOwned { get; private set; }
     public ShopItemData ShopItem => shopItem;
 
+    // Identificador para la partida guardada: el nombre del artículo de tienda ("Bike")
+    public string SaveId => shopItem.name;
+
+    // Marca el vehículo como propio al cargar una partida, sin cobrar ni avisar
+    public void LoadOwned(bool owned)
+    {
+        IsOwned = owned;
+    }
+
     // Todos los vehículos con propietario de la escena (como DeliveryPoint.All), para saber cuáles tienes
     private static readonly List<VehicleOwnership> all = new List<VehicleOwnership>();
     public static IReadOnlyList<VehicleOwnership> All => all;

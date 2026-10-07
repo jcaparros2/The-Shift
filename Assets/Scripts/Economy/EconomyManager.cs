@@ -33,6 +33,12 @@ public class EconomyManager : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
+    // Pone el saldo de una partida guardada, sin avisar (no es un ingreso ni un gasto)
+    public void LoadState(int money)
+    {
+        Money = Mathf.Max(money, 0);
+    }
+
     public void AddMoney(int amount)
     {
         if (amount <= 0) return;
