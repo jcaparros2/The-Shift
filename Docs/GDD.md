@@ -266,7 +266,7 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 - [x] Almacén QuickDrop: recoger paquetes
 - [x] Generar pedidos con destino, pago y hora límite
 - [x] Entregar y cobrar
-- [ ] Saldo de dinero visible y una tienda donde gastarlo
+- [x] Saldo de dinero visible y una tienda donde gastarlo
 - [ ] Vivienda con cama para terminar el día
 - [ ] Guardar y cargar partida
 

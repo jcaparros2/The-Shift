@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e064a0b63db6d9340a63e6f522abac21, type: 2}
   - {fileID: 11400000, guid: e064a0b63db6d9340a63e6f522abac21, type: 2}
   - {fileID: 11400000, guid: ebac4af1149e4eb4ab4f94e1a21c7eae, type: 2}
+  onFootRange: 26
   payPerMeter: 0.05
   urgentChance: 0.25
   urgentPayMultiplier: 1.5

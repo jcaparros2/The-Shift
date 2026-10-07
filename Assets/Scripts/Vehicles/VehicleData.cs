@@ -52,4 +52,8 @@ public class VehicleData : ScriptableObject
 
     [Tooltip("Tamaño máximo de paquete que se puede cargar.")]
     public PackageSize maxPackageSize = PackageSize.Small;
+
+    [Header("Pedidos")]
+    [Tooltip("Distancia máxima (m desde el almacén) de los pedidos que te llegan si tienes este vehículo.")]
+    [Min(0f)] public float deliveryRange = 100f;
 }

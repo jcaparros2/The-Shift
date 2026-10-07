@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Controla al jugador a pie: caminar con WASD/stick, mirar con el ratón y saltar con Espacio.
+// Controla al jugador a pie: caminar con WASD/stick, correr con Shift, mirar con el ratón y saltar con Espacio.
 // El cuerpo gira en horizontal (yaw) y solo el "cameraTarget" gira en vertical (pitch),
 // así más adelante una cámara de Cinemachine (primera o tercera persona) puede seguir
 // a ese mismo punto sin rehacer el jugador.
@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour
     [Header("Movimiento")]
     [Tooltip("Velocidad al caminar, en metros por segundo.")]
     [SerializeField] private float walkSpeed = 4f;
+
+    [Tooltip("Velocidad al correr (Shift), en metros por segundo.")]
+    [SerializeField] private float sprintSpeed = 7f;
+
+    [Tooltip("Opcional: sin stamina se puede correr sin límite.")]
+    [SerializeField] private PlayerStamina stamina;
 
     [Tooltip("Gravedad aplicada al jugador (negativa = hacia abajo).")]
     [SerializeField] private float gravity = -20f;
@@ -33,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction jumpAction;
+    private InputAction sprintAction;
 
     // Ángulo vertical actual de la vista
     private float pitch;
@@ -48,6 +55,7 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
         lookAction = InputSystem.actions.FindAction("Player/Look", throwIfNotFound: true);
         jumpAction = InputSystem.actions.FindAction("Player/Jump", throwIfNotFound: true);
+        sprintAction = InputSystem.actions.FindAction("Player/Sprint", throwIfNotFound: true);
     }
 
     private void OnEnable()
@@ -110,7 +118,13 @@ public class PlayerController : MonoBehaviour
 
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 velocity = direction * walkSpeed + Vector3.up * verticalVelocity;
+        // Correr: Shift pulsado, yendo hacia delante y con stamina (si no hay PlayerStamina, siempre se puede)
+        bool wantsSprint = sprintAction.IsPressed() && input.y > 0.1f;
+        bool sprinting = wantsSprint && (stamina == null || stamina.CanSprint);
+        if (sprinting && stamina != null) stamina.UseForSprint(Time.deltaTime);
+
+        float speed = sprinting ? sprintSpeed : walkSpeed;
+        Vector3 velocity = direction * speed + Vector3.up * verticalVelocity;
         controller.Move(velocity * Time.deltaTime);
     }
 }

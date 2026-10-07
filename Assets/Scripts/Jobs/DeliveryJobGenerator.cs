@@ -58,14 +58,14 @@ public class DeliveryJobGenerator : MonoBehaviour
 
     private void CreateJob(Transform slot)
     {
-        if (DeliveryPoint.All.Count == 0 || settings.packageTypes.Length == 0)
+        DeliveryPoint destination = PickDestinationInRange();
+        if (destination == null || settings.packageTypes.Length == 0)
         {
-            Debug.LogWarning("No hay destinos de entrega o tipos de paquete: no se pueden crear pedidos.", this);
+            Debug.LogWarning("No hay destinos a tu alcance o tipos de paquete: no se pueden crear pedidos.", this);
             return;
         }
 
         PackageData data = settings.packageTypes[Random.Range(0, settings.packageTypes.Length)];
-        DeliveryPoint destination = DeliveryPoint.All[Random.Range(0, DeliveryPoint.All.Count)];
         float distance = Vector3.Distance(origin.position, destination.transform.position);
         bool urgent = Random.value < settings.urgentChance;
 
@@ -87,6 +87,19 @@ public class DeliveryJobGenerator : MonoBehaviour
         package.AssignJob(job);
 
         OnJobCreated?.Invoke(job);
+    }
+
+    // Destino al azar entre los que están a tu alcance: a pie, cerca; con vehículo, según su deliveryRange
+    private DeliveryPoint PickDestinationInRange()
+    {
+        float range = Mathf.Max(settings.onFootRange, VehicleOwnership.BestOwnedDeliveryRange());
+
+        var inRange = new List<DeliveryPoint>();
+        foreach (DeliveryPoint point in DeliveryPoint.All)
+        {
+            if (Vector3.Distance(origin.position, point.transform.position) <= range) inRange.Add(point);
+        }
+        return inRange.Count > 0 ? inRange[Random.Range(0, inRange.Count)] : null;
     }
 
     // Un hueco está libre si no tiene ningún paquete encima (al cogerlo, el paquete deja de ser su hijo)

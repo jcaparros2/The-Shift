@@ -16,6 +16,9 @@ public class DeliveryJobSettings : ScriptableObject
     [Tooltip("Tipos de paquete que pueden salir. Repite uno para que salga más a menudo.")]
     public PackageData[] packageTypes;
 
+    [Tooltip("Distancia máxima (m desde el almacén) de los pedidos cuando vas a pie. Con vehículo manda su deliveryRange.")]
+    [Min(0f)] public float onFootRange = 26f;
+
     [Header("Pago")]
     [Tooltip("Euros extra por cada metro de distancia desde el almacén.")]
     [Min(0f)] public float payPerMeter = 0.05f;

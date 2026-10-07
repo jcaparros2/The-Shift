@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 // Si un vehículo es del jugador o está en venta.
@@ -16,6 +17,27 @@ public class VehicleOwnership : MonoBehaviour
 
     public bool IsOwned { get; private set; }
     public ShopItemData ShopItem => shopItem;
+
+    // Todos los vehículos con propietario de la escena (como DeliveryPoint.All), para saber cuáles tienes
+    private static readonly List<VehicleOwnership> all = new List<VehicleOwnership>();
+    public static IReadOnlyList<VehicleOwnership> All => all;
+
+    private void OnEnable() => all.Add(this);
+    private void OnDisable() => all.Remove(this);
+
+    // El mejor alcance de pedidos entre los vehículos que tienes (0 si no tienes ninguno)
+    public static float BestOwnedDeliveryRange()
+    {
+        float best = 0f;
+        foreach (VehicleOwnership vehicle in all)
+        {
+            if (vehicle.IsOwned && vehicle.TryGetComponent(out VehicleController controller))
+            {
+                best = Mathf.Max(best, controller.Data.deliveryRange);
+            }
+        }
+        return best;
+    }
 
     public string BuyPrompt => $"Comprar {shopItem.displayName} · {shopItem.price} €";
 
@@ -36,7 +58,7 @@ public class VehicleOwnership : MonoBehaviour
         }
 
         IsOwned = true;
-        PlayerMessages.Show($"Has comprado: {shopItem.displayName}");
+        PlayerMessages.Show($"Has comprado: {shopItem.displayName}. Te llegarán pedidos más lejanos.");
         OnPurchased?.Invoke(this);
         return true;
     }
