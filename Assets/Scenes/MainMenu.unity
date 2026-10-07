@@ -1394,7 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b07be766e7ea0440939593cce7d8025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  gameSceneName: SampleScene
+  gameSceneName: Game
   continueButton: {fileID: 424110759}
   newGameButton: {fileID: 1362091595}
 --- !u!114 &1506923798

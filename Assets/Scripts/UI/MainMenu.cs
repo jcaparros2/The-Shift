@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [Tooltip("Nombre de la escena del juego (debe estar en File > Build Profiles > Scene List).")]
-    [SerializeField] private string gameSceneName = "SampleScene";
+    [SerializeField] private string gameSceneName = "Game";
 
     [SerializeField] private Button continueButton;
     [SerializeField] private Button newGameButton;

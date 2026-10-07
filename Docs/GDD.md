@@ -268,7 +268,7 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 - [x] Entregar y cobrar
 - [x] Saldo de dinero visible y una tienda donde gastarlo
 - [x] Vivienda con cama para terminar el día
-- [ ] Guardar y cargar partida
+- [x] Guardar y cargar partida
 
 ## Riesgos y preguntas abiertas
 
