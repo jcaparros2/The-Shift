@@ -16,3 +16,4 @@ MonoBehaviour:
   size: 0
   fragile: 1
   basePay: 12
+  prefab: {fileID: 4330407363867755091, guid: 460e3483c2bd1094ba3068e92d12c975, type: 3}

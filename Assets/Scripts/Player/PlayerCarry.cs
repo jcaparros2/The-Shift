@@ -51,7 +51,19 @@ public class PlayerCarry : MonoBehaviour
 
         HeldPackage = package;
         package.AttachTo(holdPoint);
-        PlayerMessages.Show($"Has cogido: {package.Data.displayName} ({package.Data.basePay} €)");
+
+        // La primera vez que coges un paquete con pedido, el pedido pasa a ser tuyo
+        DeliveryJob job = package.Job;
+        if (job != null && job.Status == DeliveryJobStatus.Available)
+        {
+            job.Accept();
+            PlayerMessages.Show($"Pedido aceptado: {job.Destination.Address}, antes de {job.DeadlineText}");
+        }
+        else
+        {
+            PlayerMessages.Show(job != null ? $"Has cogido: pedido para {job.Destination.Address}"
+                                            : $"Has cogido: {package.Data.displayName}");
+        }
         OnHeldPackageChanged?.Invoke(package);
         return true;
     }

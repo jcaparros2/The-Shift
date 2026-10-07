@@ -16,4 +16,7 @@ public class PackageData : ScriptableObject
 
     [Tooltip("Pago por entregarlo, en euros, sin contar la propina.")]
     [Min(0)] public int basePay = 8;
+
+    [Tooltip("Prefab del paquete físico, para crearlo cuando llega un pedido.")]
+    public Package prefab;
 }

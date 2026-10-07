@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e851f665d28b2a540b0f9be028fbc3e1, type: 3}
+  m_Name: DeliveryJobSettings
+  m_EditorClassIdentifier: Assembly-CSharp::DeliveryJobSettings
+  shiftStartHour: 8
+  shiftEndHour: 18
+  jobsPerHour: 3
+  packageTypes:
+  - {fileID: 11400000, guid: e064a0b63db6d9340a63e6f522abac21, type: 2}
+  - {fileID: 11400000, guid: e064a0b63db6d9340a63e6f522abac21, type: 2}
+  - {fileID: 11400000, guid: e064a0b63db6d9340a63e6f522abac21, type: 2}
+  - {fileID: 11400000, guid: ebac4af1149e4eb4ab4f94e1a21c7eae, type: 2}
+  - {fileID: 11400000, guid: 3972a7e94d583dd4dadec901c686874b, type: 2}
+  payPerMeter: 0.05
+  urgentChance: 0.25
+  urgentPayMultiplier: 1.5
+  estimatedSpeed: 5
+  normalMarginHours: 2
+  urgentMarginHours: 0.75

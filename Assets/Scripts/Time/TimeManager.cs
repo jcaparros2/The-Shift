@@ -32,6 +32,13 @@ public class TimeManager : MonoBehaviour
     public int Hour => Mathf.FloorToInt(TimeOfDay);
     public int Minute => Mathf.FloorToInt((TimeOfDay - Hour) * 60f);
 
+    // Horas totales desde el inicio del día 0. Sirve para comparar momentos de días distintos
+    // (por ejemplo, una hora límite a las 00:30 del día siguiente).
+    public float TotalHours => Day * 24f + TimeOfDay;
+
+    // Segundos reales que dura una hora de juego (sin contar timeSpeed)
+    public float RealSecondsPerGameHour => settings.realSecondsPerGameHour;
+
     public bool IsPaused
     {
         get => isPaused;
@@ -102,5 +109,12 @@ public class TimeManager : MonoBehaviour
     }
 
     // Texto "HH:MM" de la hora actual
-    public string GetTimeText() => $"{Hour:00}:{Minute:00}";
+    public string GetTimeText() => FormatTime(TimeOfDay);
+
+    // Convierte horas (13.5, o en horas totales) en texto "HH:MM" (13:30)
+    public static string FormatTime(float hours)
+    {
+        int totalMinutes = Mathf.FloorToInt(Mathf.Repeat(hours, 24f) * 60f);
+        return $"{totalMinutes / 60:00}:{totalMinutes % 60:00}";
+    }
 }

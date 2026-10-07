@@ -10,7 +10,20 @@ public class Package : MonoBehaviour, IInteractable
 
     public PackageData Data => data;
     public bool IsHeld { get; private set; }
-    public string GetInteractionPrompt(GameObject interactor) => $"Coger: {data.displayName}";
+
+    // El pedido al que pertenece (null si es un paquete suelto, sin pedido)
+    public DeliveryJob Job { get; private set; }
+
+    public string GetInteractionPrompt(GameObject interactor)
+    {
+        // Con pedido, la "etiqueta" del paquete dice a dónde va, cuánto paga y hasta cuándo
+        return Job == null ? $"Coger: {data.displayName}" : $"Coger: {data.displayName} → {Job.Summary}";
+    }
+
+    public void AssignJob(DeliveryJob job)
+    {
+        Job = job;
+    }
 
     private Rigidbody rb;
     private Collider[] colliders;
