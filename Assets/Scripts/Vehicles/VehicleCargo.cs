@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 // La carga de un vehículo (la caja trasera de la bici, el maletero...).
-// Mirándola con el botón de interactuar: si llevas un paquete en la mano lo carga;
-// si no, descarga el último que se cargó y te lo pone en la mano.
+// Mirándola con el botón de interactuar: si llevas un paquete en la mano lo carga en el primer
+// hueco libre; si no, descarga el del último hueco ocupado y te lo pone en la mano.
 // La capacidad sale de VehicleData (cargoSlots y maxPackageSize).
 public class VehicleCargo : MonoBehaviour, IInteractable
 {
@@ -21,25 +20,40 @@ public class VehicleCargo : MonoBehaviour, IInteractable
     // Avisa cuando se carga o descarga algo (para la UI, los pedidos...)
     public event Action OnCargoChanged;
 
-    private readonly List<Package> packages = new List<Package>();
-
-    public IReadOnlyList<Package> Packages => packages;
     public int Capacity => Mathf.Min(slots.Length, vehicle.Data.cargoSlots);
-    public bool IsFull => packages.Count >= Capacity;
+    public bool IsFull => LoadedCount >= Capacity;
+
+    // No guardamos una lista aparte: lo cargado es lo que hay encima de cada hueco.
+    // Así, si un paquete desaparece (por ejemplo, al cancelarse su pedido), su hueco queda libre solo.
+    public int LoadedCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < Capacity; i++)
+            {
+                if (PackageIn(i) != null) count++;
+            }
+            return count;
+        }
+    }
+
+    private Package PackageIn(int slotIndex) => slots[slotIndex].GetComponentInChildren<Package>();
 
     // El texto cambia según lo que haría E: cargar si llevas algo en la mano, descargar si no
     public string GetInteractionPrompt(GameObject interactor)
     {
         if (IsForSale) return ownership.BuyPrompt;
 
-        string count = $"({packages.Count}/{Capacity})";
+        int loaded = LoadedCount;
+        string count = $"({loaded}/{Capacity})";
         bool carrying = interactor.TryGetComponent(out PlayerCarry carry) && carry.IsCarrying;
 
         if (carrying)
         {
             return IsFull ? $"Carga llena {count}" : $"Cargar paquete {count}";
         }
-        return packages.Count > 0 ? $"Descargar paquete {count}" : $"Carga vacía {count}";
+        return loaded > 0 ? $"Descargar paquete {count}" : $"Carga vacía {count}";
     }
 
     public void Interact(GameObject interactor)
@@ -79,33 +93,34 @@ public class VehicleCargo : MonoBehaviour, IInteractable
             return false;
         }
 
-        carry.ReleaseHeldPackage();
-        packages.Add(package);
-        package.AttachTo(slots[packages.Count - 1]);
+        // Primer hueco libre
+        int freeSlot = 0;
+        while (PackageIn(freeSlot) != null) freeSlot++;
 
-        PlayerMessages.Show($"Cargado: {package.Data.displayName} ({packages.Count}/{Capacity})");
+        carry.ReleaseHeldPackage();
+        package.AttachTo(slots[freeSlot]);
+
+        PlayerMessages.Show($"Cargado: {package.Data.displayName} ({LoadedCount}/{Capacity})");
         OnCargoChanged?.Invoke();
         return true;
     }
 
-    // Pasa el último paquete cargado a la mano del jugador
+    // Pasa a la mano del jugador el paquete del último hueco ocupado
     public bool TryUnload(PlayerCarry carry)
     {
-        if (packages.Count == 0)
+        for (int i = Capacity - 1; i >= 0; i--)
         {
-            PlayerMessages.Show("La carga está vacía.");
-            return false;
+            Package package = PackageIn(i);
+            if (package == null) continue;
+
+            // Si no cabe en la mano (por ejemplo, uno mediano del coche), se queda donde estaba
+            if (!carry.TryPickUp(package)) return false;
+
+            OnCargoChanged?.Invoke();
+            return true;
         }
 
-        Package package = packages[packages.Count - 1];
-        if (!carry.TryPickUp(package))
-        {
-            // No cabe en la mano (por ejemplo, uno mediano del coche): se queda donde estaba
-            return false;
-        }
-
-        packages.RemoveAt(packages.Count - 1);
-        OnCargoChanged?.Invoke();
-        return true;
+        PlayerMessages.Show("La carga está vacía.");
+        return false;
     }
 }

@@ -35,6 +35,33 @@ public class PlayerJobs : MonoBehaviour
         OnJobsChanged?.Invoke();
     }
 
+    // Al terminar el día, los pedidos sin entregar se pierden: sus paquetes vuelven al almacén
+    // (desaparecen del mundo, estén en la mano, en un vehículo o en el suelo). Devuelve cuántos había.
+    public int CancelAllJobs()
+    {
+        int count = activeJobs.Count;
+        if (count == 0) return 0;
+
+        // El de la mano se suelta primero, para que PlayerCarry no se quede apuntando a algo destruido
+        if (carry.HeldPackage != null && activeJobs.Contains(carry.HeldPackage.Job))
+        {
+            carry.ReleaseHeldPackage();
+        }
+
+        foreach (Package package in FindObjectsByType<Package>())
+        {
+            if (package.Job != null && activeJobs.Contains(package.Job))
+            {
+                package.transform.SetParent(null);   // fuera ya de la caja del vehículo
+                Destroy(package.gameObject);
+            }
+        }
+
+        activeJobs.Clear();
+        OnJobsChanged?.Invoke();
+        return count;
+    }
+
     // ¿Tienes algún pedido para este destino? (para el texto de la puerta)
     public bool HasJobFor(DeliveryPoint point)
     {

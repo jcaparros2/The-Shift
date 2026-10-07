@@ -267,7 +267,7 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 - [x] Generar pedidos con destino, pago y hora límite
 - [x] Entregar y cobrar
 - [x] Saldo de dinero visible y una tienda donde gastarlo
-- [ ] Vivienda con cama para terminar el día
+- [x] Vivienda con cama para terminar el día
 - [ ] Guardar y cargar partida
 
 ## Riesgos y preguntas abiertas

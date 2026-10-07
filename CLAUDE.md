@@ -54,4 +54,5 @@ Docs/
 - Hecho en fase 1: textos de interacción, punto de mira y avisos en pantalla (`InteractionPromptUI`, `PlayerMessages` + `MessageDisplay`). Pedidos: `DeliveryJobGenerator` llena el almacén durante el turno con paquetes-pedido (`DeliveryJob`, `DeliveryJobSettings`) para 5 destinos (`DeliveryPoint`); `PlayerJobs` guarda los aceptados y `JobListUI` los muestra.
 - Hecho en fase 1: entregar y cobrar. La puerta del destino (`DeliveryPoint`) es interactuable; `PlayerJobs.TryDeliver` paga con propina a tiempo o penalización con retraso, y `EconomyManager` guarda el dinero (empieza con 150 €).
 - Hecho en fase 1: saldo en pantalla (`MoneyDisplay`) y tienda: la bici está en venta (`ShopItemData` + `VehicleOwnership`, 250 €). A pie solo salen pedidos cercanos (`onFootRange`); cada vehículo comprado amplía el alcance (`VehicleData.deliveryRange`). Correr con Shift gasta stamina (`PlayerStamina` + `StaminaBarUI`).
-- Siguiente tarea: vivienda con cama para terminar el día.
+- Hecho en fase 1: no se corre con un paquete en la mano. Vivienda: el jugador empieza en su habitación; la cama (`Bed` + `SleepController`) deja dormir de 18:00 a 06:00, funde a negro, muestra el resumen del día (`DayStats`, `ScreenFader`), cancela los pedidos sin entregar y despierta a las 07:00.
+- Siguiente tarea: guardar y cargar partida.
