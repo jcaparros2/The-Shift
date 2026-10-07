@@ -46,7 +46,7 @@ Docs/
 
 ## Estado actual
 
-- Fase actual: **1 · MVP: Reparto**.
+- Fase actual: **2 · Taxi y vehículos** (fase 1 terminada y pulida: barrio greybox de 150 m con nombres, marcadores, minimapa y HUD).
 - Fase 0 terminada: jugador en primera persona (caminar, mirar, interactuar con `IInteractable`) en `Game`, y prototipo de conducción arcade (`VehicleController` + `VehicleData`, cámara con Cinemachine) en `DrivingPrototype`.
 - Hecho en fase 1: reloj del juego (`TimeManager` + `TimeSettings`, eventos `OnHourChanged`/`OnDayChanged`), ciclo día/noche (`DayNightLighting`) y hora en pantalla (`ClockDisplay`) en `Game`.
 - Hecho en fase 1: bicicleta conducible (prefab `Bike`, mismo `VehicleController` que el coche). Se sube y se baja con E (`VehicleEntry` + `PlayerVehicleHandler`, mapa de controles "Vehicle"). Cámaras con Cinemachine: primera persona a pie y cámara propia de cada vehículo al conducir (`PlayerCameraSwitcher`). El jugador salta con Espacio.
@@ -56,4 +56,4 @@ Docs/
 - Hecho en fase 1: saldo en pantalla (`MoneyDisplay`) y tienda: la bici está en venta (`ShopItemData` + `VehicleOwnership`, 250 €). A pie solo salen pedidos cercanos (`onFootRange`); cada vehículo comprado amplía el alcance (`VehicleData.deliveryRange`). Correr con Shift gasta stamina (`PlayerStamina` + `StaminaBarUI`).
 - Hecho en fase 1: no se corre con un paquete en la mano. Vivienda: el jugador empieza en su habitación; la cama (`Bed` + `SleepController`) deja dormir de 18:00 a 06:00, funde a negro, muestra el resumen del día (`DayStats`, `ScreenFader`), cancela los pedidos sin entregar y despierta a las 07:00.
 - Hecho en fase 1: guardar y cargar. Se guarda solo al dormir (`SaveManager` + `SaveSystem`, JSON en persistentDataPath: día, hora, dinero y vehículos). Escenas: `MainMenu` (Continuar / Nueva partida / Salir, arranca primero) y `Game` (el juego; antes `SampleScene`). Esc abre el menú de pausa (`PauseMenu`).
-- Todas las tareas de la fase 1 están hechas. Falta comprobar su condición del GDD ("un día entero de reparto se juega de principio a fin y engancha") antes de pasar a la fase 2.
+- Siguiente tarea: Taxi CityCab (parada para alquilar el taxi por noche y devolverlo). Las solicitudes de viaje llegarán como aviso en el HUD hasta que exista el móvil.

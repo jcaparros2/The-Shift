@@ -270,6 +270,18 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 - [x] Vivienda con cama para terminar el día
 - [x] Guardar y cargar partida
 
+### Tareas de la fase 2 (taxi y vehículos)
+
+- [ ] Taxi CityCab: parada donde alquilar el taxi por noche (25 €, turno 21:00–03:00) y devolverlo
+- [ ] Viajes: solicitud con pasajero, origen, destino y pago estimado (aviso en el HUD hasta tener móvil); aceptar o rechazar, recoger, llevar y cobrar (de madrugada paga más)
+- [ ] Tipos de pasajero (con prisa, tranquilo, borracho, turista) con valoración de 1 a 5 estrellas y propina
+- [ ] Daño simple del vehículo: los golpes lo estropean y bajan la propina
+- [ ] Taller: reparar el vehículo pagando
+- [ ] Moto en venta (4 paquetes pequeños, rápida)
+- [ ] Coche propio en venta: sirve para los dos turnos y ahorra el alquiler del taxi
+- [ ] Gastos fijos: alquiler semanal de la vivienda (y gasolina o comida) con resumen semanal
+- [ ] Equilibrar la economía para que una semana sea justa pero aguantable
+
 ## Riesgos y preguntas abiertas
 
 El mayor riesgo es el alcance: un proyecto en solitario muere más por querer hacerlo todo que por falta de ideas.
@@ -285,7 +297,7 @@ El mayor riesgo es el alcance: un proyecto en solitario muere más por querer ha
 ### Preguntas abiertas
 
 - [ ] ¿Cámara en primera o tercera persona?
-- [ ] ¿El taxi empieza siendo de la empresa (alquiler por noche), como propone este documento?
+- [x] ¿El taxi empieza siendo de la empresa (alquiler por noche), como propone este documento? Sí: 25 € por noche en la parada de CityCab, hasta tener coche propio.
 - [ ] ¿Habrá trabajos ilegales u opcionales tipo "pedidos especiales", o todo es legal?
 - [ ] ¿El juego tiene un final o es infinito?
 - [ ] ¿Qué pasa si no duermes: pierdes energía, eficiencia o te quedas dormido al volante?
