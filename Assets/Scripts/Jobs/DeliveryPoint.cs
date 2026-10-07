@@ -18,6 +18,10 @@ public class DeliveryPoint : MonoBehaviour, IInteractable
     private static readonly List<DeliveryPoint> all = new List<DeliveryPoint>();
     public static IReadOnlyList<DeliveryPoint> All => all;
 
+    // Sin recarga de código al darle a Play, la lista podría conservar restos de un Play anterior
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetOnPlay() => all.Clear();
+
     private void OnEnable() => all.Add(this);
     private void OnDisable() => all.Remove(this);
 

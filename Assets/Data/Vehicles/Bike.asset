@@ -26,4 +26,4 @@ MonoBehaviour:
   uprightStrength: 10
   cargoSlots: 2
   maxPackageSize: 0
-  deliveryRange: 100
+  deliveryRange: 300

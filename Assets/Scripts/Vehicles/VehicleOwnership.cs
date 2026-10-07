@@ -31,6 +31,10 @@ public class VehicleOwnership : MonoBehaviour
     private static readonly List<VehicleOwnership> all = new List<VehicleOwnership>();
     public static IReadOnlyList<VehicleOwnership> All => all;
 
+    // Sin recarga de código al darle a Play, la lista podría conservar restos de un Play anterior
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetOnPlay() => all.Clear();
+
     private void OnEnable() => all.Add(this);
     private void OnDisable() => all.Remove(this);
 

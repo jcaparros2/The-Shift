@@ -8,6 +8,10 @@ public static class PlayerMessages
 {
     public static event Action<string> OnMessage;
 
+    // Sin recarga de código al darle a Play, quedarían suscritos objetos de un Play anterior
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetOnPlay() => OnMessage = null;
+
     public static void Show(string message)
     {
         // También a la consola, útil para depurar
