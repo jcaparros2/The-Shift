@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Opcional: sin stamina se puede correr sin límite.")]
     [SerializeField] private PlayerStamina stamina;
 
+    [Tooltip("Opcional: con un paquete en la mano no se puede correr.")]
+    [SerializeField] private PlayerCarry carry;
+
     [Tooltip("Gravedad aplicada al jugador (negativa = hacia abajo).")]
     [SerializeField] private float gravity = -20f;
 
@@ -118,8 +121,14 @@ public class PlayerController : MonoBehaviour
 
         verticalVelocity += gravity * Time.deltaTime;
 
-        // Correr: Shift pulsado, yendo hacia delante y con stamina (si no hay PlayerStamina, siempre se puede)
-        bool wantsSprint = sprintAction.IsPressed() && input.y > 0.1f;
+        // Correr: Shift pulsado, yendo hacia delante, con las manos libres y con stamina
+        bool handsFull = carry != null && carry.IsCarrying;
+        if (handsFull && sprintAction.WasPressedThisFrame())
+        {
+            PlayerMessages.Show("Con un paquete en la mano no puedes correr.");
+        }
+
+        bool wantsSprint = sprintAction.IsPressed() && input.y > 0.1f && !handsFull;
         bool sprinting = wantsSprint && (stamina == null || stamina.CanSprint);
         if (sprinting && stamina != null) stamina.UseForSprint(Time.deltaTime);
 
