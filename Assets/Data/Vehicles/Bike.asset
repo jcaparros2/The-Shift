@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bike
   m_EditorClassIdentifier: Assembly-CSharp::VehicleData
   maxSpeedKmh: 25
-  maxReverseSpeedKmh: 0
+  maxReverseSpeedKmh: 5
   accelerationKmh: 14
   brakeKmh: 40
   coastDecelerationKmh: 4

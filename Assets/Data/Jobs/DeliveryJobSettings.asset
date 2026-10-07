@@ -20,10 +20,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e064a0b63db6d9340a63e6f522abac21, type: 2}
   - {fileID: 11400000, guid: e064a0b63db6d9340a63e6f522abac21, type: 2}
   - {fileID: 11400000, guid: ebac4af1149e4eb4ab4f94e1a21c7eae, type: 2}
-  - {fileID: 11400000, guid: 3972a7e94d583dd4dadec901c686874b, type: 2}
   payPerMeter: 0.05
   urgentChance: 0.25
   urgentPayMultiplier: 1.5
   estimatedSpeed: 5
   normalMarginHours: 2
   urgentMarginHours: 0.75
+  onTimeTipPercent: 0.25
+  maxTip: 10
+  latePenaltyPerHour: 0.25
+  minLatePayPercent: 0.5
