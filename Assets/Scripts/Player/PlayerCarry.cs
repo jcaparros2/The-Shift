@@ -15,9 +15,8 @@ public class PlayerCarry : MonoBehaviour
     [Tooltip("A qué distancia delante del jugador cae el paquete al soltarlo.")]
     [SerializeField] private float dropDistance = 0.8f;
 
-    // Avisan al coger y soltar (para la UI, la bici, los pedidos...)
-    public event Action<Package> OnPackagePickedUp;
-    public event Action<Package> OnPackageDropped;
+    // Avisa cuando cambia lo que llevas en la mano: el paquete nuevo, o null si ya no llevas nada
+    public event Action<Package> OnHeldPackageChanged;
 
     public Package HeldPackage { get; private set; }
     public bool IsCarrying => HeldPackage != null;
@@ -53,23 +52,32 @@ public class PlayerCarry : MonoBehaviour
         HeldPackage = package;
         package.AttachTo(holdPoint);
         Debug.Log($"Has cogido: {package.Data.displayName} ({package.Data.basePay} €)");
-        OnPackagePickedUp?.Invoke(package);
+        OnHeldPackageChanged?.Invoke(package);
         return true;
     }
 
+    // Suelta el paquete al suelo, delante del jugador
     public void Drop()
     {
-        if (!IsCarrying) return;
+        Package package = ReleaseHeldPackage();
+        if (package == null) return;
 
-        Package package = HeldPackage;
-        HeldPackage = null;
-
-        // Delante del jugador, en horizontal, y un poco en alto para que caiga al suelo
+        // En horizontal y un poco en alto para que caiga al suelo
         Vector3 forward = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
         Vector3 position = transform.position + forward * dropDistance + Vector3.up * 0.5f;
         package.Detach(position, Quaternion.LookRotation(forward));
 
         Debug.Log($"Has soltado: {package.Data.displayName}");
-        OnPackageDropped?.Invoke(package);
+    }
+
+    // Deja de llevar el paquete y lo devuelve, para que otro lo coloque (la carga de un vehículo...)
+    public Package ReleaseHeldPackage()
+    {
+        Package package = HeldPackage;
+        if (package == null) return null;
+
+        HeldPackage = null;
+        OnHeldPackageChanged?.Invoke(null);
+        return package;
     }
 }

@@ -21,3 +21,8 @@ MonoBehaviour:
   fullTurnSpeedKmh: 25
   grip: 8
   handbrakeGrip: 1.5
+  uphillSlowdown: 0.5
+  keepUpright: 0
+  uprightStrength: 10
+  cargoSlots: 8
+  maxPackageSize: 1

@@ -24,3 +24,5 @@ MonoBehaviour:
   uphillSlowdown: 2
   keepUpright: 1
   uprightStrength: 10
+  cargoSlots: 2
+  maxPackageSize: 0

@@ -26,6 +26,8 @@ public class VehicleController : MonoBehaviour
     [Tooltip("Si alguien lo conduce. Sin conductor ignora los controles y queda frenado (aparcado).")]
     [SerializeField] private bool isDriven = true;
 
+    public VehicleData Data => data;
+
     // Velocidad actual en km/h (positiva hacia delante). Útil para un velocímetro más adelante.
     public float CurrentSpeedKmh { get; private set; }
     public bool IsGrounded { get; private set; }

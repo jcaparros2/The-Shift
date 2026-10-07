@@ -45,4 +45,11 @@ public class VehicleData : ScriptableObject
 
     [Tooltip("Lo rápido que se endereza si keepUpright está activo.")]
     [Min(0f)] public float uprightStrength = 10f;
+
+    [Header("Carga")]
+    [Tooltip("Cuántos paquetes caben (GDD: bici 2, moto 4, coche 8...).")]
+    [Min(0)] public int cargoSlots = 0;
+
+    [Tooltip("Tamaño máximo de paquete que se puede cargar.")]
+    public PackageSize maxPackageSize = PackageSize.Small;
 }

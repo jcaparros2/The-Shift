@@ -50,4 +50,5 @@ Docs/
 - Fase 0 terminada: jugador en primera persona (caminar, mirar, interactuar con `IInteractable`) en `SampleScene`, y prototipo de conducción arcade (`VehicleController` + `VehicleData`, cámara con Cinemachine) en `DrivingPrototype`.
 - Hecho en fase 1: reloj del juego (`TimeManager` + `TimeSettings`, eventos `OnHourChanged`/`OnDayChanged`), ciclo día/noche (`DayNightLighting`) y hora en pantalla (`ClockDisplay`) en `SampleScene`.
 - Hecho en fase 1: bicicleta conducible (prefab `Bike`, mismo `VehicleController` que el coche). Se sube y se baja con E (`VehicleEntry` + `PlayerVehicleHandler`, mapa de controles "Vehicle"). Cámaras con Cinemachine: primera persona a pie y cámara propia de cada vehículo al conducir (`PlayerCameraSwitcher`). El jugador salta con Espacio.
-- Siguiente tarea: almacén QuickDrop: recoger paquetes.
+- Hecho en fase 1: almacén QuickDrop provisional en `SampleScene` con paquetes (`PackageData` + `Package`, prefabs por tamaño). El jugador lleva 1 paquete pequeño en la mano (`PlayerCarry`, G para soltar) y la bici carga 2 en su caja trasera (`VehicleCargo`, capacidad en `VehicleData`).
+- Siguiente tarea: generar pedidos con destino, pago y hora límite.

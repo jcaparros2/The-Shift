@@ -10,6 +10,7 @@ public class PlayerVehicleHandler : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private PlayerInteractor playerInteractor;
+    [SerializeField] private PlayerCarry playerCarry;
 
     // Avisan al subir y bajar (para la UI, el sonido, la cámara en tercera persona...)
     public event Action<VehicleEntry> OnVehicleEntered;
@@ -52,6 +53,13 @@ public class PlayerVehicleHandler : MonoBehaviour
     public void EnterVehicle(VehicleEntry entry)
     {
         if (IsInVehicle) return;
+
+        // Con las manos ocupadas no se conduce: primero hay que cargar o soltar el paquete
+        if (playerCarry != null && playerCarry.IsCarrying)
+        {
+            Debug.Log("Carga el paquete en el vehículo o suéltalo (G) antes de subir.");
+            return;
+        }
 
         CurrentVehicle = entry;
         enteredFrame = Time.frameCount;

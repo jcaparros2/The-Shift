@@ -3229,6 +3229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVehicleHandler
   playerController: {fileID: 1300000004}
   playerInteractor: {fileID: 1300000006}
+  playerCarry: {fileID: 1300000009}
 --- !u!114 &1300000008
 MonoBehaviour:
   m_ObjectHideFlags: 0
