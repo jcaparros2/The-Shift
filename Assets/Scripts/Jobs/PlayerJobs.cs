@@ -31,7 +31,7 @@ public class PlayerJobs : MonoBehaviour
 
         job.Accept();
         activeJobs.Add(job);
-        PlayerMessages.Show($"Pedido aceptado: {job.Destination.Address}, antes de {job.DeadlineText}");
+        PlayerMessages.Show($"Pedido aceptado: {job.Destination.DisplayName}, antes de {job.DeadlineText}");
         OnJobsChanged?.Invoke();
     }
 
@@ -86,7 +86,7 @@ public class PlayerJobs : MonoBehaviour
         }
         if (job.Destination != point)
         {
-            PlayerMessages.Show($"Este paquete va a {job.Destination.Address}.");
+            PlayerMessages.Show($"Este paquete va a {job.Destination.DisplayName}.");
             return false;
         }
 

@@ -44,7 +44,7 @@ public class DeliveryJob
     {
         get
         {
-            string text = $"{Destination.Address} · {Pay} € · antes de {DeadlineText}";
+            string text = $"{Destination.DisplayName} · {Pay} € · antes de {DeadlineText}";
             if (IsUrgent) text += " · URGENTE";
             return text;
         }

@@ -47,7 +47,7 @@ public class JobListUI : MonoBehaviour
             float hoursLeft = job.Deadline - now;
             string color = hoursLeft < 0f ? "#FF5A4A" : hoursLeft < warningHours ? "#FFB340" : "#FFFFFF";
             string late = hoursLeft < 0f ? " (tarde)" : "";
-            text.Append($"\n<color={color}>{job.Destination.Address} · {job.Pay} € · {job.DeadlineText}{late}</color>");
+            text.Append($"\n<color={color}>{job.Destination.DisplayName} · {job.Pay} € · {job.DeadlineText}{late}</color>");
         }
         label.text = text.ToString();
     }
