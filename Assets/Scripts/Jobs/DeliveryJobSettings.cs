@@ -35,4 +35,17 @@ public class DeliveryJobSettings : ScriptableObject
 
     [Tooltip("Margen en horas de juego para un pedido urgente.")]
     [Min(0f)] public float urgentMarginHours = 0.75f;
+
+    [Header("Al entregar")]
+    [Tooltip("Propina si llegas a tiempo, como parte del pago (0,25 = 25 %).")]
+    [Range(0f, 1f)] public float onTimeTipPercent = 0.25f;
+
+    [Tooltip("Propina máxima en euros (GDD: 0–10 €).")]
+    [Min(0)] public int maxTip = 10;
+
+    [Tooltip("Cuánto baja el pago por cada hora de retraso (0,25 = 25 % por hora).")]
+    [Range(0f, 1f)] public float latePenaltyPerHour = 0.25f;
+
+    [Tooltip("Lo mínimo que se cobra aunque llegues muy tarde (0,5 = la mitad del pago).")]
+    [Range(0f, 1f)] public float minLatePayPercent = 0.5f;
 }

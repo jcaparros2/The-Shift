@@ -5,7 +5,8 @@ using UnityEngine;
 // Un destino de entrega: una puerta con su dirección.
 // Se apunta solo a una lista común (All) al activarse, así el generador de pedidos
 // encuentra todos los destinos de la escena sin tener que arrastrarlos uno a uno.
-public class DeliveryPoint : MonoBehaviour
+// Mirando la puerta con Interactuar se entrega el paquete que llevas en la mano.
+public class DeliveryPoint : MonoBehaviour, IInteractable
 {
     [SerializeField] private string address = "Calle Mayor 1";
 
@@ -24,5 +25,30 @@ public class DeliveryPoint : MonoBehaviour
     private void OnValidate()
     {
         if (label != null) label.text = address;
+    }
+
+    public string GetInteractionPrompt(GameObject interactor)
+    {
+        interactor.TryGetComponent(out PlayerCarry carry);
+        interactor.TryGetComponent(out PlayerJobs jobs);
+        DeliveryJob held = carry != null && carry.HeldPackage != null ? carry.HeldPackage.Job : null;
+
+        if (held != null && held.Destination == this && held.Status == DeliveryJobStatus.Accepted)
+        {
+            return $"Entregar pedido · {address}";
+        }
+        if (jobs != null && jobs.HasJobFor(this))
+        {
+            return $"{address} · trae el paquete en la mano";
+        }
+        return address;
+    }
+
+    public void Interact(GameObject interactor)
+    {
+        if (interactor.TryGetComponent(out PlayerJobs jobs))
+        {
+            jobs.TryDeliver(this);
+        }
     }
 }

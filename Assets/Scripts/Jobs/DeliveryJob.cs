@@ -29,6 +29,11 @@ public class DeliveryJob
         if (Status == DeliveryJobStatus.Available) Status = DeliveryJobStatus.Accepted;
     }
 
+    public void Complete()
+    {
+        if (Status == DeliveryJobStatus.Accepted) Status = DeliveryJobStatus.Delivered;
+    }
+
     public void Expire()
     {
         if (Status == DeliveryJobStatus.Available) Status = DeliveryJobStatus.Expired;
