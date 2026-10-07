@@ -19,13 +19,26 @@ public class VehicleEntry : MonoBehaviour, IInteractable
     [Tooltip("A qué distancia del centro del vehículo se baja el conductor (por la izquierda).")]
     [SerializeField] private float exitSideDistance = 1.2f;
 
+    [Tooltip("Opcional: si el vehículo puede estar en venta. Sin esto, siempre se puede usar.")]
+    [SerializeField] private VehicleOwnership ownership;
+
     public VehicleController Vehicle => vehicle;
     public Transform Seat => seat;
     public CinemachineCamera DriverCamera => driverCamera;
-    public string GetInteractionPrompt(GameObject interactor) => prompt;
+
+    private bool IsForSale => ownership != null && !ownership.IsOwned;
+
+    public string GetInteractionPrompt(GameObject interactor) => IsForSale ? ownership.BuyPrompt : prompt;
 
     public void Interact(GameObject interactor)
     {
+        // En venta: interactuar es comprarlo
+        if (IsForSale)
+        {
+            ownership.TryBuy();
+            return;
+        }
+
         // Solo el jugador sabe subirse a vehículos; cualquier otro objeto no hace nada
         if (interactor.TryGetComponent(out PlayerVehicleHandler handler))
         {

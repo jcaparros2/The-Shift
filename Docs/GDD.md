@@ -85,12 +85,12 @@ Durante el viaje aparecen opciones de diálogo. Las respuestas cambian la relaci
 
 ## Vehículos y conducción
 
-Al principio no tienes coche, así que CityCab te alquila un taxi de la empresa por noche. Comprar tu propio coche elimina ese gasto y es el primer gran objetivo.
+Empiezas a pie, con pedidos pequeños y cercanos, uno cada vez. Cada vehículo que compras desbloquea pedidos más grandes y más lejanos: primero la bici, luego la moto o el coche. Al principio no tienes coche, así que CityCab te alquila un taxi de la empresa por noche. Comprar tu propio coche elimina ese gasto y es el primer gran objetivo.
 
 | Vehículo | Precio (propuesta) | Paquetes | Taxi | Notas |
 | --- | --- | --- | --- | --- |
-| A pie | 0 € | 1 pequeño | No | Solo el primer día |
-| Bicicleta | Inicial | 2 pequeños | No | Sin gasolina, lenta en cuestas |
+| A pie | 0 € | 1 pequeño | No | Hasta comprar la bici; solo pedidos cercanos |
+| Bicicleta | 250 € | 2 pequeños | No | Primera compra; desbloquea pedidos más lejanos. Sin gasolina, lenta en cuestas |
 | Moto | 1.500 € | 4 pequeños | No | Rápida, poca carga |
 | Taxi de empresa | 25 € por noche | — | Sí | Alquiler; si lo dañas, pagas |
 | Coche propio | 6.000 € | 8 medianos | Sí | Sirve para los dos turnos |

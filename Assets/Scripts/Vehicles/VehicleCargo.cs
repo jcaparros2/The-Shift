@@ -13,6 +13,11 @@ public class VehicleCargo : MonoBehaviour, IInteractable
     [Tooltip("Puntos donde se colocan los paquetes, en orden. Debe haber al menos tantos como cargoSlots.")]
     [SerializeField] private Transform[] slots;
 
+    [Tooltip("Opcional: si el vehículo puede estar en venta. Mientras lo esté, no se puede cargar.")]
+    [SerializeField] private VehicleOwnership ownership;
+
+    private bool IsForSale => ownership != null && !ownership.IsOwned;
+
     // Avisa cuando se carga o descarga algo (para la UI, los pedidos...)
     public event Action OnCargoChanged;
 
@@ -25,6 +30,8 @@ public class VehicleCargo : MonoBehaviour, IInteractable
     // El texto cambia según lo que haría E: cargar si llevas algo en la mano, descargar si no
     public string GetInteractionPrompt(GameObject interactor)
     {
+        if (IsForSale) return ownership.BuyPrompt;
+
         string count = $"({packages.Count}/{Capacity})";
         bool carrying = interactor.TryGetComponent(out PlayerCarry carry) && carry.IsCarrying;
 
@@ -37,6 +44,13 @@ public class VehicleCargo : MonoBehaviour, IInteractable
 
     public void Interact(GameObject interactor)
     {
+        // En venta: interactuar con la caja también es comprarlo
+        if (IsForSale)
+        {
+            ownership.TryBuy();
+            return;
+        }
+
         if (!interactor.TryGetComponent(out PlayerCarry carry)) return;
 
         if (carry.IsCarrying)

@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: 6699423896550067032}
   - component: {fileID: 5336876003844468872}
   - component: {fileID: 435781561637164311}
+  - component: {fileID: 8303003168170755922}
   m_Layer: 0
   m_Name: Bike
   m_TagString: Untagged
@@ -318,6 +319,21 @@ MonoBehaviour:
   driverCamera: {fileID: 0}
   prompt: Subir a la bici
   exitSideDistance: 1.2
+  ownership: {fileID: 8303003168170755922}
+--- !u!114 &8303003168170755922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2232789462028124624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9a99d2ce6d61742ae61838a5367b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleOwnership
+  shopItem: {fileID: 11400000, guid: 61821785978a27544ab668b5c26dbc11, type: 2}
+  ownedAtStart: 0
 --- !u!1 &2510420153164675293
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,6 +990,7 @@ MonoBehaviour:
   slots:
   - {fileID: 5143546580808650797}
   - {fileID: 5842537262687168920}
+  ownership: {fileID: 8303003168170755922}
 --- !u!1 &8445798932276805047
 GameObject:
   m_ObjectHideFlags: 0

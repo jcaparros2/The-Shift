@@ -40,6 +40,10 @@ public class EconomyManager : MonoBehaviour
         OnMoneyChanged?.Invoke(Money, amount);
     }
 
+    // Solo para pruebas: en Play, clic derecho sobre el componente en el Inspector → "+100 € (pruebas)"
+    [ContextMenu("+100 € (pruebas)")]
+    private void AddTestMoney() => AddMoney(100);
+
     // Gasta si hay saldo suficiente; devuelve si se ha podido pagar (para la tienda, alquileres...)
     public bool TrySpend(int amount)
     {
