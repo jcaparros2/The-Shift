@@ -264,7 +264,7 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 - [x] Reloj del juego con ciclo día/noche e iluminación
 - [x] Bicicleta conducible
 - [x] Almacén QuickDrop: recoger paquetes
-- [ ] Generar pedidos con destino, pago y hora límite
+- [x] Generar pedidos con destino, pago y hora límite
 - [ ] Entregar y cobrar
 - [ ] Saldo de dinero visible y una tienda donde gastarlo
 - [ ] Vivienda con cama para terminar el día

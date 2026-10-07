@@ -51,4 +51,5 @@ Docs/
 - Hecho en fase 1: reloj del juego (`TimeManager` + `TimeSettings`, eventos `OnHourChanged`/`OnDayChanged`), ciclo día/noche (`DayNightLighting`) y hora en pantalla (`ClockDisplay`) en `SampleScene`.
 - Hecho en fase 1: bicicleta conducible (prefab `Bike`, mismo `VehicleController` que el coche). Se sube y se baja con E (`VehicleEntry` + `PlayerVehicleHandler`, mapa de controles "Vehicle"). Cámaras con Cinemachine: primera persona a pie y cámara propia de cada vehículo al conducir (`PlayerCameraSwitcher`). El jugador salta con Espacio.
 - Hecho en fase 1: almacén QuickDrop provisional en `SampleScene` con paquetes (`PackageData` + `Package`, prefabs por tamaño). El jugador lleva 1 paquete pequeño en la mano (`PlayerCarry`, G para soltar) y la bici carga 2 en su caja trasera (`VehicleCargo`, capacidad en `VehicleData`).
-- Siguiente tarea: generar pedidos con destino, pago y hora límite.
+- Hecho en fase 1: textos de interacción, punto de mira y avisos en pantalla (`InteractionPromptUI`, `PlayerMessages` + `MessageDisplay`). Pedidos: `DeliveryJobGenerator` llena el almacén durante el turno con paquetes-pedido (`DeliveryJob`, `DeliveryJobSettings`) para 5 destinos (`DeliveryPoint`); `PlayerJobs` guarda los aceptados y `JobListUI` los muestra.
+- Siguiente tarea: entregar y cobrar.
