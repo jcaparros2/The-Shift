@@ -28,6 +28,12 @@ public class PlayerInteractor : MonoBehaviour
         interactAction = InputSystem.actions.FindAction("Player/Interact", throwIfNotFound: true);
     }
 
+    // Al desactivarse (por ejemplo, al subir a un vehículo) ya no mira a nada
+    private void OnDisable()
+    {
+        SetTarget(null);
+    }
+
     private void Update()
     {
         UpdateTarget();
@@ -52,6 +58,11 @@ public class PlayerInteractor : MonoBehaviour
             newTarget = hit.collider.GetComponentInParent<IInteractable>();
         }
 
+        SetTarget(newTarget);
+    }
+
+    private void SetTarget(IInteractable newTarget)
+    {
         if (newTarget != CurrentTarget)
         {
             CurrentTarget = newTarget;

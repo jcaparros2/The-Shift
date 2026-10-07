@@ -57,7 +57,7 @@ public class PlayerVehicleHandler : MonoBehaviour
         // Con las manos ocupadas no se conduce: primero hay que cargar o soltar el paquete
         if (playerCarry != null && playerCarry.IsCarrying)
         {
-            Debug.Log("Carga el paquete en el vehículo o suéltalo (G) antes de subir.");
+            PlayerMessages.Show("Carga el paquete en el vehículo o suéltalo (G) antes de subir.");
             return;
         }
 

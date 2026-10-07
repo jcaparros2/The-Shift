@@ -22,7 +22,7 @@ public class VehicleEntry : MonoBehaviour, IInteractable
     public VehicleController Vehicle => vehicle;
     public Transform Seat => seat;
     public CinemachineCamera DriverCamera => driverCamera;
-    public string InteractionPrompt => prompt;
+    public string GetInteractionPrompt(GameObject interactor) => prompt;
 
     public void Interact(GameObject interactor)
     {

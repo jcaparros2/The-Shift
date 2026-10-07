@@ -40,18 +40,18 @@ public class PlayerCarry : MonoBehaviour
     {
         if (IsCarrying)
         {
-            Debug.Log("Ya llevas un paquete en la mano. Suéltalo con G.");
+            PlayerMessages.Show("Ya llevas un paquete en la mano. Suéltalo con G.");
             return false;
         }
         if (package.Data.size > maxSize)
         {
-            Debug.Log($"{package.Data.displayName}: es demasiado grande para llevarlo en la mano.");
+            PlayerMessages.Show($"{package.Data.displayName}: es demasiado grande para llevarlo en la mano.");
             return false;
         }
 
         HeldPackage = package;
         package.AttachTo(holdPoint);
-        Debug.Log($"Has cogido: {package.Data.displayName} ({package.Data.basePay} €)");
+        PlayerMessages.Show($"Has cogido: {package.Data.displayName} ({package.Data.basePay} €)");
         OnHeldPackageChanged?.Invoke(package);
         return true;
     }
@@ -67,7 +67,7 @@ public class PlayerCarry : MonoBehaviour
         Vector3 position = transform.position + forward * dropDistance + Vector3.up * 0.5f;
         package.Detach(position, Quaternion.LookRotation(forward));
 
-        Debug.Log($"Has soltado: {package.Data.displayName}");
+        PlayerMessages.Show($"Has soltado: {package.Data.displayName}");
     }
 
     // Deja de llevar el paquete y lo devuelve, para que otro lo coloque (la carga de un vehículo...)

@@ -6,7 +6,7 @@ public class TestInteractable : MonoBehaviour, IInteractable
 {
     [SerializeField] private string prompt = "Cambiar color";
 
-    public string InteractionPrompt => prompt;
+    public string GetInteractionPrompt(GameObject interactor) => prompt;
 
     public void Interact(GameObject interactor)
     {

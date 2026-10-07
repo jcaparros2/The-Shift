@@ -10,7 +10,7 @@ public class Package : MonoBehaviour, IInteractable
 
     public PackageData Data => data;
     public bool IsHeld { get; private set; }
-    public string InteractionPrompt => $"Coger: {data.displayName}";
+    public string GetInteractionPrompt(GameObject interactor) => $"Coger: {data.displayName}";
 
     private Rigidbody rb;
     private Collider[] colliders;

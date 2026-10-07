@@ -22,7 +22,18 @@ public class VehicleCargo : MonoBehaviour, IInteractable
     public int Capacity => Mathf.Min(slots.Length, vehicle.Data.cargoSlots);
     public bool IsFull => packages.Count >= Capacity;
 
-    public string InteractionPrompt => $"Carga {packages.Count}/{Capacity} (cargar o descargar)";
+    // El texto cambia según lo que haría E: cargar si llevas algo en la mano, descargar si no
+    public string GetInteractionPrompt(GameObject interactor)
+    {
+        string count = $"({packages.Count}/{Capacity})";
+        bool carrying = interactor.TryGetComponent(out PlayerCarry carry) && carry.IsCarrying;
+
+        if (carrying)
+        {
+            return IsFull ? $"Carga llena {count}" : $"Cargar paquete {count}";
+        }
+        return packages.Count > 0 ? $"Descargar paquete {count}" : $"Carga vacía {count}";
+    }
 
     public void Interact(GameObject interactor)
     {
@@ -45,12 +56,12 @@ public class VehicleCargo : MonoBehaviour, IInteractable
 
         if (package.Data.size > vehicle.Data.maxPackageSize)
         {
-            Debug.Log($"{package.Data.displayName}: no cabe en este vehículo.");
+            PlayerMessages.Show($"{package.Data.displayName}: no cabe en este vehículo.");
             return false;
         }
         if (IsFull)
         {
-            Debug.Log($"La carga está llena ({Capacity}/{Capacity}).");
+            PlayerMessages.Show($"La carga está llena ({Capacity}/{Capacity}).");
             return false;
         }
 
@@ -58,7 +69,7 @@ public class VehicleCargo : MonoBehaviour, IInteractable
         packages.Add(package);
         package.AttachTo(slots[packages.Count - 1]);
 
-        Debug.Log($"Cargado: {package.Data.displayName} ({packages.Count}/{Capacity})");
+        PlayerMessages.Show($"Cargado: {package.Data.displayName} ({packages.Count}/{Capacity})");
         OnCargoChanged?.Invoke();
         return true;
     }
@@ -68,7 +79,7 @@ public class VehicleCargo : MonoBehaviour, IInteractable
     {
         if (packages.Count == 0)
         {
-            Debug.Log("La carga está vacía.");
+            PlayerMessages.Show("La carga está vacía.");
             return false;
         }
 
