@@ -20,6 +20,10 @@ public class PlayerVehicleHandler : MonoBehaviour
     public bool IsInVehicle => CurrentVehicle != null;
 
     private CharacterController characterController;
+
+    // Opcional: la stamina del jugador, que se presta a los vehículos a pedales (bici) para esprintar
+    private PlayerStamina playerStamina;
+
     private InputActionMap playerMap;
     private InputActionMap vehicleMap;
     private InputAction exitAction;
@@ -30,6 +34,7 @@ public class PlayerVehicleHandler : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        playerStamina = GetComponent<PlayerStamina>();
         playerMap = InputSystem.actions.FindActionMap("Player", throwIfNotFound: true);
         vehicleMap = InputSystem.actions.FindActionMap("Vehicle", throwIfNotFound: true);
         exitAction = vehicleMap.FindAction("Exit", throwIfNotFound: true);
@@ -75,6 +80,7 @@ public class PlayerVehicleHandler : MonoBehaviour
         playerMap.Disable();
         vehicleMap.Enable();
         entry.Vehicle.IsDriven = true;
+        entry.Vehicle.RiderStamina = playerStamina;
 
         OnVehicleEntered?.Invoke(entry);
     }
@@ -86,6 +92,7 @@ public class PlayerVehicleHandler : MonoBehaviour
         VehicleEntry entry = CurrentVehicle;
         CurrentVehicle = null;
         entry.Vehicle.IsDriven = false;
+        entry.Vehicle.RiderStamina = null;
 
         // De pie junto al vehículo, mirando hacia donde miraba el vehículo
         transform.SetParent(null);

@@ -41,9 +41,17 @@ public class VehicleController : MonoBehaviour
         set => isDriven = value;
     }
 
+    // Stamina del conductor, para los vehículos a pedales (VehicleData.usesRiderStamina).
+    // La pone PlayerVehicleHandler al subir y la quita al bajar.
+    public PlayerStamina RiderStamina { get; set; }
+
+    // Si este frame va esprintando (para efectos, sonido o un velocímetro más adelante)
+    public bool IsSprinting { get; private set; }
+
     private Rigidbody rb;
     private InputAction moveAction;
     private InputAction handbrakeAction;
+    private InputAction sprintAction;
     private float flippedTimer;
 
     private void Awake()
@@ -63,6 +71,7 @@ public class VehicleController : MonoBehaviour
         // PlayerVehicleHandler lo activa al subir y lo apaga al bajar.
         moveAction = InputSystem.actions.FindAction("Vehicle/Drive", throwIfNotFound: true);
         handbrakeAction = InputSystem.actions.FindAction("Vehicle/Handbrake", throwIfNotFound: true);
+        sprintAction = InputSystem.actions.FindAction("Vehicle/Sprint", throwIfNotFound: true);
     }
 
     // La física se hace en FixedUpdate, que va a ritmo fijo y sincronizado con el motor de física
@@ -81,6 +90,9 @@ public class VehicleController : MonoBehaviour
         float forwardSpeed = Vector3.Dot(velocity, transform.forward);
         float sideSpeed = Vector3.Dot(velocity, transform.right);
         float upSpeed = Vector3.Dot(velocity, transform.up);
+
+        IsSprinting = WantsSprint(input.y, handbrake);
+        if (IsSprinting) RiderStamina.UseForSprint(Time.fixedDeltaTime);
 
         // En el aire no hay control: solo actúan la gravedad y la inercia
         if (IsGrounded)
@@ -103,6 +115,14 @@ public class VehicleController : MonoBehaviour
         ResetIfFlipped();
     }
 
+    // Esprintar: solo vehículos a pedales, con Shift, acelerando hacia delante, en el suelo y con stamina
+    private bool WantsSprint(float throttle, bool handbrake)
+    {
+        return isDriven && data.usesRiderStamina && RiderStamina != null
+            && sprintAction.IsPressed() && throttle > 0.1f && !handbrake
+            && IsGrounded && RiderStamina.CanSprint;
+    }
+
     private float ApplyThrottle(float forwardSpeed, float throttle, bool handbrake)
     {
         float dt = Time.fixedDeltaTime;
@@ -116,8 +136,25 @@ public class VehicleController : MonoBehaviour
         if (throttle > 0.01f)
         {
             // Si íbamos marcha atrás, primero frena; si no, acelera hasta la máxima
-            float rate = forwardSpeed < 0f ? data.brakeKmh : data.accelerationKmh;
+            float acceleration = data.accelerationKmh;
             float maxSpeed = data.maxSpeedKmh * UphillFactor();
+
+            // Esprintando: más velocidad punta y más aceleración. Al soltar Shift vuelve
+            // poco a poco a la velocidad normal (pierde velocidad con la deceleración normal, abajo)
+            if (IsSprinting)
+            {
+                acceleration *= data.sprintAccelerationMultiplier;
+                maxSpeed *= data.sprintSpeedMultiplier;
+            }
+
+            float targetSpeed = maxSpeed * throttle * KmhToMs;
+            float rate = forwardSpeed < 0f ? data.brakeKmh : acceleration;
+
+            // Si va más rápido que el objetivo (acaba de dejar de esprintar), no frena en seco: va soltando como sin pedalear
+            if (forwardSpeed > targetSpeed)
+            {
+                return Mathf.MoveTowards(forwardSpeed, targetSpeed, data.coastDecelerationKmh * KmhToMs * dt);
+            }
             return Mathf.MoveTowards(forwardSpeed, maxSpeed * throttle * KmhToMs, rate * KmhToMs * dt);
         }
 

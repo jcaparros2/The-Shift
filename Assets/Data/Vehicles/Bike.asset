@@ -17,6 +17,9 @@ MonoBehaviour:
   accelerationKmh: 14
   brakeKmh: 40
   coastDecelerationKmh: 4
+  usesRiderStamina: 1
+  sprintSpeedMultiplier: 1.4
+  sprintAccelerationMultiplier: 1.5
   turnSpeed: 140
   fullTurnSpeedKmh: 8
   grip: 12

@@ -22,6 +22,16 @@ public class VehicleData : ScriptableObject
     [Tooltip("Cuánto pierde de velocidad por segundo sin pisar nada, en km/h.")]
     public float coastDecelerationKmh = 12f;
 
+    [Header("Esprint (Shift)")]
+    [Tooltip("Se mueve con las piernas del conductor (bici): con Shift va más rápido gastando la stamina del jugador.")]
+    public bool usesRiderStamina = false;
+
+    [Tooltip("Cuánto se multiplica la velocidad máxima al esprintar.")]
+    [Min(1f)] public float sprintSpeedMultiplier = 1.4f;
+
+    [Tooltip("Cuánto se multiplica la aceleración al esprintar.")]
+    [Min(1f)] public float sprintAccelerationMultiplier = 1.5f;
+
     [Header("Giro")]
     [Tooltip("Grados por segundo que gira a buena velocidad.")]
     public float turnSpeed = 110f;
