@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Controla al jugador a pie: caminar con WASD/stick y mirar con el ratón.
+// Controla al jugador a pie: caminar con WASD/stick, correr con Shift, mirar con el ratón y saltar con Espacio.
 // El cuerpo gira en horizontal (yaw) y solo el "cameraTarget" gira en vertical (pitch),
 // así más adelante una cámara de Cinemachine (primera o tercera persona) puede seguir
 // a ese mismo punto sin rehacer el jugador.
@@ -12,8 +12,17 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Velocidad al caminar, en metros por segundo.")]
     [SerializeField] private float walkSpeed = 4f;
 
+    [Tooltip("Velocidad al correr (Shift), en metros por segundo.")]
+    [SerializeField] private float sprintSpeed = 7f;
+
+    [Tooltip("Opcional: sin stamina se puede correr sin límite.")]
+    [SerializeField] private PlayerStamina stamina;
+
     [Tooltip("Gravedad aplicada al jugador (negativa = hacia abajo).")]
     [SerializeField] private float gravity = -20f;
+
+    [Tooltip("Altura del salto, en metros.")]
+    [SerializeField] private float jumpHeight = 1.1f;
 
     [Header("Cámara")]
     [Tooltip("Punto a la altura de los ojos que gira arriba/abajo. La cámara cuelga de aquí.")]
@@ -29,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private InputAction moveAction;
     private InputAction lookAction;
+    private InputAction jumpAction;
+    private InputAction sprintAction;
 
     // Ángulo vertical actual de la vista
     private float pitch;
@@ -43,6 +54,8 @@ public class PlayerController : MonoBehaviour
         // Acciones del asset de acciones del proyecto (InputSystem_Actions, mapa "Player")
         moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
         lookAction = InputSystem.actions.FindAction("Player/Look", throwIfNotFound: true);
+        jumpAction = InputSystem.actions.FindAction("Player/Jump", throwIfNotFound: true);
+        sprintAction = InputSystem.actions.FindAction("Player/Sprint", throwIfNotFound: true);
     }
 
     private void OnEnable()
@@ -77,6 +90,13 @@ public class PlayerController : MonoBehaviour
         cameraTarget.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 
+    // Vuelve a mirar al frente (por ejemplo, al subir a un vehículo)
+    public void ResetLook()
+    {
+        pitch = 0f;
+        cameraTarget.localRotation = Quaternion.identity;
+    }
+
     private void Move()
     {
         Vector2 input = moveAction.ReadValue<Vector2>();
@@ -89,9 +109,22 @@ public class PlayerController : MonoBehaviour
         {
             verticalVelocity = -2f;
         }
+
+        // Saltar solo desde el suelo. La velocidad inicial sale de la física: v = √(2·g·altura)
+        if (controller.isGrounded && jumpAction.WasPressedThisFrame())
+        {
+            verticalVelocity = Mathf.Sqrt(2f * -gravity * jumpHeight);
+        }
+
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 velocity = direction * walkSpeed + Vector3.up * verticalVelocity;
+        // Correr: Shift pulsado, yendo hacia delante y con stamina (si no hay PlayerStamina, siempre se puede)
+        bool wantsSprint = sprintAction.IsPressed() && input.y > 0.1f;
+        bool sprinting = wantsSprint && (stamina == null || stamina.CanSprint);
+        if (sprinting && stamina != null) stamina.UseForSprint(Time.deltaTime);
+
+        float speed = sprinting ? sprintSpeed : walkSpeed;
+        Vector3 velocity = direction * speed + Vector3.up * verticalVelocity;
         controller.Move(velocity * Time.deltaTime);
     }
 }

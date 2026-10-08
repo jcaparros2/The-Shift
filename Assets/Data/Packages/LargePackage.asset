@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2ce7112901b9a4c905707bf0cb0b84, type: 3}
+  m_Name: LargePackage
+  m_EditorClassIdentifier: Assembly-CSharp::PackageData
+  displayName: Paquete grande
+  size: 2
+  fragile: 0
+  basePay: 25
+  prefab: {fileID: 2949856303199898926, guid: 275a7be608db0994e9d2f7cff4ad5d5e, type: 3}

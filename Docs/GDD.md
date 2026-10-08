@@ -85,12 +85,12 @@ Durante el viaje aparecen opciones de diálogo. Las respuestas cambian la relaci
 
 ## Vehículos y conducción
 
-Al principio no tienes coche, así que CityCab te alquila un taxi de la empresa por noche. Comprar tu propio coche elimina ese gasto y es el primer gran objetivo.
+Empiezas a pie, con pedidos pequeños y cercanos, uno cada vez. Cada vehículo que compras desbloquea pedidos más grandes y más lejanos: primero la bici, luego la moto o el coche. Al principio no tienes coche, así que CityCab te alquila un taxi de la empresa por noche. Comprar tu propio coche elimina ese gasto y es el primer gran objetivo.
 
 | Vehículo | Precio (propuesta) | Paquetes | Taxi | Notas |
 | --- | --- | --- | --- | --- |
-| A pie | 0 € | 1 pequeño | No | Solo el primer día |
-| Bicicleta | Inicial | 2 pequeños | No | Sin gasolina, lenta en cuestas |
+| A pie | 0 € | 1 pequeño | No | Hasta comprar la bici; solo pedidos cercanos |
+| Bicicleta | 250 € | 2 pequeños | No | Primera compra; desbloquea pedidos más lejanos. Sin gasolina, lenta en cuestas |
 | Moto | 1.500 € | 4 pequeños | No | Rápida, poca carga |
 | Taxi de empresa | 25 € por noche | — | Sí | Alquiler; si lo dañas, pagas |
 | Coche propio | 6.000 € | 8 medianos | Sí | Sirve para los dos turnos |
@@ -260,15 +260,27 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 
 ### Tareas de la fase 1 (MVP)
 
-- [ ] Jugador en primera persona que camina e interactúa
-- [ ] Reloj del juego con ciclo día/noche e iluminación
-- [ ] Bicicleta conducible
-- [ ] Almacén QuickDrop: recoger paquetes
-- [ ] Generar pedidos con destino, pago y hora límite
-- [ ] Entregar y cobrar
-- [ ] Saldo de dinero visible y una tienda donde gastarlo
-- [ ] Vivienda con cama para terminar el día
-- [ ] Guardar y cargar partida
+- [x] Jugador en primera persona que camina e interactúa
+- [x] Reloj del juego con ciclo día/noche e iluminación
+- [x] Bicicleta conducible
+- [x] Almacén QuickDrop: recoger paquetes
+- [x] Generar pedidos con destino, pago y hora límite
+- [x] Entregar y cobrar
+- [x] Saldo de dinero visible y una tienda donde gastarlo
+- [x] Vivienda con cama para terminar el día
+- [x] Guardar y cargar partida
+
+### Tareas de la fase 2 (taxi y vehículos)
+
+- [x] Taxi CityCab: parada donde alquilar el taxi por noche (25 €, turno 21:00–03:00) y devolverlo
+- [ ] Viajes: solicitud con pasajero, origen, destino y pago estimado (aviso en el HUD hasta tener móvil); aceptar o rechazar, recoger, llevar y cobrar (de madrugada paga más)
+- [ ] Tipos de pasajero (con prisa, tranquilo, borracho, turista) con valoración de 1 a 5 estrellas y propina
+- [ ] Daño simple del vehículo: los golpes lo estropean y bajan la propina
+- [ ] Taller: reparar el vehículo pagando
+- [ ] Moto en venta (4 paquetes pequeños, rápida)
+- [ ] Coche propio en venta: sirve para los dos turnos y ahorra el alquiler del taxi
+- [ ] Gastos fijos: alquiler semanal de la vivienda (y gasolina o comida) con resumen semanal
+- [ ] Equilibrar la economía para que una semana sea justa pero aguantable
 
 ## Riesgos y preguntas abiertas
 
@@ -285,7 +297,7 @@ El mayor riesgo es el alcance: un proyecto en solitario muere más por querer ha
 ### Preguntas abiertas
 
 - [ ] ¿Cámara en primera o tercera persona?
-- [ ] ¿El taxi empieza siendo de la empresa (alquiler por noche), como propone este documento?
+- [x] ¿El taxi empieza siendo de la empresa (alquiler por noche), como propone este documento? Sí: 25 € por noche en la parada de CityCab, hasta tener coche propio.
 - [ ] ¿Habrá trabajos ilegales u opcionales tipo "pedidos especiales", o todo es legal?
 - [ ] ¿El juego tiene un final o es infinito?
 - [ ] ¿Qué pasa si no duermes: pierdes energía, eficiencia o te quedas dormido al volante?

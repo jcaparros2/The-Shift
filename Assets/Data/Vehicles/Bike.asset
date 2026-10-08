@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cd58fadcd3161409c1a27ef71bd396, type: 3}
+  m_Name: Bike
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleData
+  maxSpeedKmh: 25
+  maxReverseSpeedKmh: 5
+  accelerationKmh: 14
+  brakeKmh: 40
+  coastDecelerationKmh: 4
+  usesRiderStamina: 1
+  sprintSpeedMultiplier: 1.4
+  sprintAccelerationMultiplier: 1.5
+  turnSpeed: 140
+  fullTurnSpeedKmh: 8
+  grip: 12
+  handbrakeGrip: 3
+  uphillSlowdown: 2
+  keepUpright: 1
+  uprightStrength: 10
+  cargoSlots: 2
+  maxPackageSize: 0
+  deliveryRange: 250
