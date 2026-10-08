@@ -22,13 +22,25 @@ public class VehicleEntry : MonoBehaviour, IInteractable
     [Tooltip("Opcional: si el vehículo puede estar en venta. Sin esto, siempre se puede usar.")]
     [SerializeField] private VehicleOwnership ownership;
 
+    [Tooltip("Opcional: si el vehículo solo se usa alquilado (taxi de CityCab).")]
+    [SerializeField] private VehicleRental rental;
+
+    [Tooltip("Texto cuando es de alquiler y no está alquilado.")]
+    [SerializeField] private string notRentedPrompt = "Taxi de CityCab · alquílalo en la parada";
+
     public VehicleController Vehicle => vehicle;
     public Transform Seat => seat;
     public CinemachineCamera DriverCamera => driverCamera;
 
     private bool IsForSale => ownership != null && !ownership.IsOwned;
+    private bool IsLockedRental => rental != null && !rental.IsRented;
 
-    public string GetInteractionPrompt(GameObject interactor) => IsForSale ? ownership.BuyPrompt : prompt;
+    public string GetInteractionPrompt(GameObject interactor)
+    {
+        if (IsForSale) return ownership.BuyPrompt;
+        if (IsLockedRental) return notRentedPrompt;
+        return prompt;
+    }
 
     public void Interact(GameObject interactor)
     {
@@ -36,6 +48,13 @@ public class VehicleEntry : MonoBehaviour, IInteractable
         if (IsForSale)
         {
             ownership.TryBuy();
+            return;
+        }
+
+        // De alquiler sin alquilar: no se puede subir
+        if (IsLockedRental)
+        {
+            PlayerMessages.Show(notRentedPrompt + ".");
             return;
         }
 

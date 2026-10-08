@@ -272,7 +272,7 @@ No hay fechas: dependen de cuántas horas a la semana le dediques. Mejor medir e
 
 ### Tareas de la fase 2 (taxi y vehículos)
 
-- [ ] Taxi CityCab: parada donde alquilar el taxi por noche (25 €, turno 21:00–03:00) y devolverlo
+- [x] Taxi CityCab: parada donde alquilar el taxi por noche (25 €, turno 21:00–03:00) y devolverlo
 - [ ] Viajes: solicitud con pasajero, origen, destino y pago estimado (aviso en el HUD hasta tener móvil); aceptar o rechazar, recoger, llevar y cobrar (de madrugada paga más)
 - [ ] Tipos de pasajero (con prisa, tranquilo, borracho, turista) con valoración de 1 a 5 estrellas y propina
 - [ ] Daño simple del vehículo: los golpes lo estropean y bajan la propina
